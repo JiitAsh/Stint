@@ -1,7 +1,10 @@
 package com.example.stint.activity
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
+import android.widget.Button
+import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -13,6 +16,11 @@ import com.example.stint.model.Task
 class MainActivity : AppCompatActivity() {
 
     var dbHandler : TasksDatabaseHandler? = null
+    var enterTask = findViewById<EditText>(R.id.enterTaskId)
+    var assignTo = findViewById<EditText>(R.id.assignToId)
+    var assignedBy = findViewById<EditText>(R.id.assignedById)
+    var saveATask = findViewById<Button>(R.id.saveTaskBtn)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,16 +34,35 @@ class MainActivity : AppCompatActivity() {
 
         dbHandler = TasksDatabaseHandler(this)
 
-        var task = Task()
-        task.taskName = "Clean Room"
-        task.assignedBy = "Jitesh"
-        task.assignedTo = "Kumawat"
-        //dbHandler!!.createTask(task)
+        saveATask.setOnClickListener {
+
+            if(!TextUtils.isEmpty(enterTask.text.toString())
+                && !TextUtils.isEmpty(assignTo.text.toString())
+                && !TextUtils.isEmpty(assignedBy.text.toString())){
+
+                // save task to the database
+
+            }
+        }
 
 
-        // Read from database
-        var tasks: Task = dbHandler!!.readATask(1)
 
-        Log.d("Item: ",tasks.taskName.toString())
+
+
+
+
+
+
+//        var task = Task()
+//        task.taskName = "Clean Room"
+//        task.assignedBy = "Jitesh"
+//        task.assignedTo = "Kumawat"
+//        //dbHandler!!.createTask(task)
+//
+//
+//        // Read from database
+//        var tasks: Task = dbHandler!!.readATask(1)
+//
+//        Log.d("Item: ",tasks.taskName.toString())
     }
 }

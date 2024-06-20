@@ -45,9 +45,9 @@ class TasksDatabaseHandler(context: Context):
      */
 
     fun createTask(task: Task){
-        var db:SQLiteDatabase = writableDatabase
+        val db:SQLiteDatabase = writableDatabase
 
-        var values: ContentValues = ContentValues()
+        val values: ContentValues = ContentValues()
         values.put(KEY_TASK_NAME,task.taskName)
         values.put(KEY_TASK_ASSIGNED_BY,task.assignedBy)
         values.put(KEY_TASK_ASSIGNED_TO,task.assignedTo)
@@ -60,8 +60,8 @@ class TasksDatabaseHandler(context: Context):
     }
 
     fun readATask(id: Int):Task{
-        var db: SQLiteDatabase = writableDatabase
-        var cursor: Cursor = db.query(TABLE_NAME, arrayOf(KEY_ID,
+        val db: SQLiteDatabase = writableDatabase
+        val cursor: Cursor = db.query(TABLE_NAME, arrayOf(KEY_ID,
             KEY_TASK_NAME, KEY_TASK_ASSIGNED_BY,
             KEY_TASK_ASSIGNED_TO, KEY_TASK_ASSIGNED_TIME),
             KEY_ID+"=?", arrayOf(id.toString()),
@@ -71,19 +71,76 @@ class TasksDatabaseHandler(context: Context):
         if(cursor != null)
             cursor.moveToFirst()
 
-        var task = Task()
+        val task = Task()
         task.taskName = cursor.getString(cursor.getColumnIndex(KEY_TASK_NAME))
         task.assignedBy = cursor.getString(cursor.getColumnIndex(KEY_TASK_ASSIGNED_BY))
         task.assignedTo = cursor.getString(cursor.getColumnIndex(KEY_TASK_ASSIGNED_TO))
         task.timeAssigned = cursor.getLong(cursor.getColumnIndex(KEY_TASK_ASSIGNED_TIME))
 
 
-        var dateFormat: java.text.DateFormat = DateFormat.getDateInstance()
+        val dateFormat: java.text.DateFormat = DateFormat.getDateInstance()
         var formattedDate = dateFormat.format(Date(cursor.
             getLong(cursor.getColumnIndex(KEY_TASK_ASSIGNED_TIME))).time)
 
 
         return task
 
+    }
+
+    fun readTasks():ArrayList<Task>{
+        val db: SQLiteDatabase = readableDatabase
+        var list: ArrayList<Task> = ArrayList()
+
+        // select all tasks from table
+        var selectAll = "SELECT * FROM " + TABLE_NAME
+        var cursor: Cursor = db.rawQuery(selectAll,null)
+
+        // loop through our tasks
+        if(cursor.moveToFirst()){
+            do{
+                var task = Task()
+
+                task.taskName = cursor.getString(cursor.getColumnIndex(KEY_TASK_NAME))
+                task.assignedBy = cursor.getString(cursor.getColumnIndex(KEY_TASK_ASSIGNED_BY))
+                task.assignedTo = cursor.getString(cursor.getColumnIndex(KEY_TASK_ASSIGNED_TO))
+                task.timeAssigned = cursor.getLong(cursor.getColumnIndex(KEY_TASK_ASSIGNED_TIME))
+
+                list.add(task)
+            }while (cursor.moveToNext())
+        }
+
+        return list
+    }
+
+
+    fun updateTask(task: Task):Int{
+        var db: SQLiteDatabase = writableDatabase
+
+        val values: ContentValues = ContentValues()
+        values.put(KEY_TASK_NAME,task.taskName)
+        values.put(KEY_TASK_ASSIGNED_BY,task.assignedBy)
+        values.put(KEY_TASK_ASSIGNED_TO,task.assignedTo)
+        values.put(KEY_TASK_ASSIGNED_TIME,System.currentTimeMillis())
+
+
+        // update a row
+        return db.update(TABLE_NAME,values,KEY_ID+"=?",
+            arrayOf(task.id.toString()))
+    }
+
+
+    fun deleteTask(task: Task){
+        var db: SQLiteDatabase = writableDatabase
+
+        db.delete(TABLE_NAME,KEY_ID+"=?", arrayOf(task.id.toString()))
+        db.close()
+    }
+
+    fun getTaskCount():Int{
+        var db:SQLiteDatabase = readableDatabase
+        var countQuery = "SELECT * FROM " + TABLE_NAME
+        var cursor: Cursor = db.rawQuery(countQuery,null)
+
+        return cursor.count
     }
 }
