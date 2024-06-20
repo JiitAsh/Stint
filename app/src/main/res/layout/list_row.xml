@@ -40,6 +40,14 @@
                 android:text="AssignedBy"
                 android:layout_toRightOf="@+id/imageViewId"/>
 
+            <TextView
+                android:id="@+id/listAssignedTo"
+                android:layout_below="@+id/listAssignedBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AssignedTo"
+                android:layout_toRightOf="@+id/imageViewId"/>
+
            <TextView
                android:id="@+id/listDate"
                android:text="Date: 20 June 2024"
