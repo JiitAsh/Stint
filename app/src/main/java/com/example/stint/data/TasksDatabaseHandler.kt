@@ -1,8 +1,11 @@
 package com.example.stint.data
 
+import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import com.example.stint.model.DATABASE_NAME
 import com.example.stint.model.DATABASE_VERSION
 import com.example.stint.model.KEY_ID
@@ -11,6 +14,9 @@ import com.example.stint.model.KEY_TASK_ASSIGNED_TIME
 import com.example.stint.model.KEY_TASK_ASSIGNED_TO
 import com.example.stint.model.KEY_TASK_NAME
 import com.example.stint.model.TABLE_NAME
+import com.example.stint.model.Task
+import java.text.DateFormat
+import java.util.Date
 
 class TasksDatabaseHandler(context: Context):
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -29,7 +35,55 @@ class TasksDatabaseHandler(context: Context):
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
 
+        db?.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME)
+        onCreate(db)
     }
 
+    /*
 
+    CRUD operations
+     */
+
+    fun createTask(task: Task){
+        var db:SQLiteDatabase = writableDatabase
+
+        var values: ContentValues = ContentValues()
+        values.put(KEY_TASK_NAME,task.taskName)
+        values.put(KEY_TASK_ASSIGNED_BY,task.assignedBy)
+        values.put(KEY_TASK_ASSIGNED_TO,task.assignedTo)
+        values.put(KEY_TASK_ASSIGNED_TIME,System.currentTimeMillis())
+
+        db.insert(TABLE_NAME,null,values)
+
+        Log.d("DATA INSERTED","SUCCESS")
+        db.close()
+    }
+
+    fun readATask(id: Int):Task{
+        var db: SQLiteDatabase = writableDatabase
+        var cursor: Cursor = db.query(TABLE_NAME, arrayOf(KEY_ID,
+            KEY_TASK_NAME, KEY_TASK_ASSIGNED_BY,
+            KEY_TASK_ASSIGNED_TO, KEY_TASK_ASSIGNED_TIME),
+            KEY_ID+"=?", arrayOf(id.toString()),
+            null,null,null,null)
+
+
+        if(cursor != null)
+            cursor.moveToFirst()
+
+        var task = Task()
+        task.taskName = cursor.getString(cursor.getColumnIndex(KEY_TASK_NAME))
+        task.assignedBy = cursor.getString(cursor.getColumnIndex(KEY_TASK_ASSIGNED_BY))
+        task.assignedTo = cursor.getString(cursor.getColumnIndex(KEY_TASK_ASSIGNED_TO))
+        task.timeAssigned = cursor.getLong(cursor.getColumnIndex(KEY_TASK_ASSIGNED_TIME))
+
+
+        var dateFormat: java.text.DateFormat = DateFormat.getDateInstance()
+        var formattedDate = dateFormat.format(Date(cursor.
+            getLong(cursor.getColumnIndex(KEY_TASK_ASSIGNED_TIME))).time)
+
+
+        return task
+
+    }
 }
