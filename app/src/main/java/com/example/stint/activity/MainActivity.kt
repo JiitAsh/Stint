@@ -48,11 +48,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-
-
-
-
 //        var task = Task()
 //        task.taskName = "Clean Room"
 //        task.assignedBy = "Jitesh"
