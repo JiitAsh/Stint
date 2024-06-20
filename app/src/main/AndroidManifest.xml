@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Stint"
         tools:targetApi="31">
         <activity
+            android:name=".activity.TaskListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
