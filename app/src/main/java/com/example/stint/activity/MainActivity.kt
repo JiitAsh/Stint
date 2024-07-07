@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity() {
 
         dbHandler = TasksDatabaseHandler(this)
 
+        checkDB()  // check db has some values or not. if yes then go to the TaskListActivity
+
 
 
         var enterTask = findViewById<EditText>(R.id.enterTaskId)
@@ -71,6 +73,7 @@ class MainActivity : AppCompatActivity() {
 
                 var intent = Intent(this,TaskListActivity::class.java)
                 startActivity(intent)
+//                finish()   // closes the activity, if we press back then we will not go to the main activity
 
             }else{
                 Toast.makeText(this, "Please enter a task", Toast.LENGTH_SHORT).show()
@@ -93,6 +96,13 @@ class MainActivity : AppCompatActivity() {
 //        Log.d("Item: ",tasks.taskName.toString())
     }
 
+
+    fun checkDB(){
+        if(dbHandler!!.getTaskCount()>0){
+            startActivity(Intent(this,TaskListActivity::class.java))
+//            finish()    // this closes the activity, if we press the back button then we will not go to the main activity
+        }
+    }
 
     fun saveToDB(task:Task){
         dbHandler!!.createTask(task)

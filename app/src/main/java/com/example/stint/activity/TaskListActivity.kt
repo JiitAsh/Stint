@@ -3,7 +3,11 @@ package com.example.stint.activity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
+import android.widget.Button
+import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -20,6 +24,8 @@ class TaskListActivity : AppCompatActivity() {
 //    private var taskList: ArrayList<Task>? = null
 //    private var taskListItems: ArrayList<Task>? = null
 //    private var layoutManager: RecyclerView.LayoutManager? = null
+    private var dialogBuilder: AlertDialog.Builder? = null
+    private var dialog: AlertDialog? = null
 
 
 
@@ -93,4 +99,28 @@ class TaskListActivity : AppCompatActivity() {
 
         return true
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.add_menu_btn){
+            createPopupDialog()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
+    fun createPopupDialog(){
+        var view = layoutInflater.inflate(R.layout.popup,null)
+
+        var taskName = view.findViewById<EditText>(R.id.popupEnterTaskId)
+        var assignedBy = view.findViewById<EditText>(R.id.popupAssignedById)
+        var assignedTo = view.findViewById<EditText>(R.id.popupAssignToId)
+        var saveButtton = view.findViewById<Button>(R.id.popupSaveTaskBtn)
+
+
+        dialogBuilder = AlertDialog.Builder(this).setView(view)  // builds dialog
+        dialog = dialogBuilder!!.create()  // actual dialog
+        dialog!!.show()   // shows the dialog
+
+    }
+
 }

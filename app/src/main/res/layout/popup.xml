@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.MainActivity">
+    android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/enterTaskId"
+        android:id="@+id/popupEnterTaskId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="224dp"
+        android:layout_marginTop="84dp"
         android:ems="10"
         android:hint="Enter a Task"
         android:inputType="text"
         android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="-16dp" />
 
     <EditText
-        android:id="@+id/assignToId"
+        android:id="@+id/popupAssignToId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
@@ -31,32 +28,35 @@
         android:inputType="text"
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterTaskId" />
+        app:layout_constraintTop_toBottomOf="@+id/popupEnterTaskId" />
 
     <EditText
-        android:id="@+id/assignedById"
+        android:id="@+id/popupAssignedById"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="48dp"
         android:ems="10"
         android:hint="Assigned by..."
         android:inputType="text"
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/assignToId" />
+        app:layout_constraintTop_toBottomOf="@+id/popupAssignToId" />
 
     <Button
-        android:id="@+id/saveTaskBtn"
+        android:id="@+id/popupSaveTaskBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
         android:text="Save Task"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/assignedById" />
-
+        app:layout_constraintTop_toBottomOf="@+id/popupAssignedById"
+        app:layout_constraintVertical_bias="0.284" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
