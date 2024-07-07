@@ -39,8 +39,9 @@ class TaskListAdapter(private val list:ArrayList<Task>,
         fun bindViews(task:Task){
             taskName.text = task.taskName
             assignedBy.text = task.assignedBy
-            //assignedDate.text = task.timeAssigned.toString()  // Todo: convert to human readable date
-            assignedDate.text = "Date: 20 June 2024"
+            //assignedDate.text = task.timeAssigned.toString()  // Todo: convert to human readable date  // done
+            assignedDate.text = task.showHumanDate(System.currentTimeMillis())    // human readable date
+//            assignedDate.text = "Date: 20 June 2024"
             assignedTo.text = task.assignedTo
         }
 

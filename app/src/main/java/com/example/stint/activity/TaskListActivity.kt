@@ -2,6 +2,7 @@ package com.example.stint.activity
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -26,6 +27,7 @@ class TaskListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_task_list)
+        setSupportActionBar(findViewById(R.id.my_toolbar))
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
 //            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -67,8 +69,8 @@ class TaskListActivity : AppCompatActivity() {
             task.taskName=c.taskName
             task.assignedBy=c.assignedBy
             task.assignedTo=c.assignedTo
-            task.timeAssigned=234567890
-            //task.timeAssigned=c.timeAssigned   // ToDo: convert to human readable date
+            //task.timeAssigned=c.timeAssigned   // ToDo: convert to human readable date   // done
+            task.showHumanDate(c.timeAssigned!!)  // human readable date
 
             taskListItems!!.add(task)
 
@@ -82,5 +84,13 @@ class TaskListActivity : AppCompatActivity() {
 //            Log.d("List",task.taskName.toString())
 //        }
 
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.top_menu,menu)
+
+        return true
     }
 }

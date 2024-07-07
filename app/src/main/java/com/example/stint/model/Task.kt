@@ -1,5 +1,8 @@
 package com.example.stint.model
 
+import java.text.DateFormat
+import java.util.Date
+
 class Task() {
     var taskName: String? = null
     var assignedBy: String? = null
@@ -16,5 +19,12 @@ class Task() {
                     this.assignedTo = assignedTo
                     this.timeAssigned = timeAssigned
                     this.id = id
+    }
+
+    fun showHumanDate(timeAssigned: Long):String{
+        var dateFormat: java.text.DateFormat = DateFormat.getDateInstance()
+        var formattedDate: String = dateFormat.format(Date(timeAssigned).time)
+
+        return formattedDate
     }
 }
