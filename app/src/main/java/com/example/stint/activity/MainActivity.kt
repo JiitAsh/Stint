@@ -2,6 +2,7 @@ package com.example.stint.activity
 
 import android.app.ProgressDialog
 import android.content.Intent
+//import android.os.Build.VERSION_CODES.R
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -12,9 +13,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.stint.R
+import com.example.stint.data.TaskListAdapter
 import com.example.stint.data.TasksDatabaseHandler
 import com.example.stint.model.Task
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,15 +31,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+//            insets
+//        }
 
 //        progressDialog = ProgressDialog(this)
 
         dbHandler = TasksDatabaseHandler(this)
+
+
 
         var enterTask = findViewById<EditText>(R.id.enterTaskId)
         var assignTo = findViewById<EditText>(R.id.assignToId)
@@ -60,7 +68,9 @@ class MainActivity : AppCompatActivity() {
 
                 saveToDB(task)
 //                progressDialog!!.cancel()
-                startActivity(Intent(this,TaskListActivity::class.java))
+
+                var intent = Intent(this,TaskListActivity::class.java)
+                startActivity(intent)
 
             }else{
                 Toast.makeText(this, "Please enter a task", Toast.LENGTH_SHORT).show()

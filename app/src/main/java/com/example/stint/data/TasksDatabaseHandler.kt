@@ -63,8 +63,8 @@ class TasksDatabaseHandler(context: Context):
         val db: SQLiteDatabase = writableDatabase
         val cursor: Cursor = db.query(TABLE_NAME, arrayOf(KEY_ID,
             KEY_TASK_NAME, KEY_TASK_ASSIGNED_BY,
-            KEY_TASK_ASSIGNED_TO, KEY_TASK_ASSIGNED_TIME),
-            KEY_ID+"=?", arrayOf(id.toString()),
+            KEY_TASK_ASSIGNED_TIME, KEY_TASK_ASSIGNED_TO),
+            KEY_ID + "=?", arrayOf(id.toString()),
             null,null,null,null)
 
 
@@ -72,16 +72,17 @@ class TasksDatabaseHandler(context: Context):
             cursor.moveToFirst()
 
         val task = Task()
+        task.id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
         task.taskName = cursor.getString(cursor.getColumnIndex(KEY_TASK_NAME))
         task.assignedBy = cursor.getString(cursor.getColumnIndex(KEY_TASK_ASSIGNED_BY))
         task.assignedTo = cursor.getString(cursor.getColumnIndex(KEY_TASK_ASSIGNED_TO))
         task.timeAssigned = cursor.getLong(cursor.getColumnIndex(KEY_TASK_ASSIGNED_TIME))
 
 
-        val dateFormat: java.text.DateFormat = DateFormat.getDateInstance()
-        var formattedDate = dateFormat.format(Date(cursor.
-            getLong(cursor.getColumnIndex(KEY_TASK_ASSIGNED_TIME))).time)
-
+//        val dateFormat: java.text.DateFormat = DateFormat.getDateInstance()
+//        var formattedDate = dateFormat.format(Date(cursor.
+//            getLong(cursor.getColumnIndex(KEY_TASK_ASSIGNED_TIME))).time)
+//
 
         return task
 
@@ -100,12 +101,13 @@ class TasksDatabaseHandler(context: Context):
             do{
                 var task = Task()
 
+                task.id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
                 task.taskName = cursor.getString(cursor.getColumnIndex(KEY_TASK_NAME))
                 task.assignedBy = cursor.getString(cursor.getColumnIndex(KEY_TASK_ASSIGNED_BY))
                 task.assignedTo = cursor.getString(cursor.getColumnIndex(KEY_TASK_ASSIGNED_TO))
                 task.timeAssigned = cursor.getLong(cursor.getColumnIndex(KEY_TASK_ASSIGNED_TIME))
 
-                list.add(task)
+                list!!.add(task)
             }while (cursor.moveToNext())
         }
 

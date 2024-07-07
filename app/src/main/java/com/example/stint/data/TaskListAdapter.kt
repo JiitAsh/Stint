@@ -14,15 +14,14 @@ class TaskListAdapter(private val list:ArrayList<Task>,
                         :RecyclerView.Adapter<TaskListAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): TaskListAdapter.ViewHolder {
         // create our view from xml file
-        var view = LayoutInflater.from(context).
-                    inflate(R.layout.list_row,parent,false)
+        var view = LayoutInflater.from(context).inflate(R.layout.list_row,parent,false)
 
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: TaskListAdapter.ViewHolder, position: Int) {
 
-        holder?.bindViews(list[position])
+        holder.bindViews(list[position])
 
     }
 
@@ -32,15 +31,16 @@ class TaskListAdapter(private val list:ArrayList<Task>,
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
-        var taskName = itemView.findViewById<TextView>(R.id.listTaskName)
-        var assignedBy = itemView.findViewById<TextView>(R.id.listAssignedBy)
-        var assignedDate = itemView.findViewById<TextView>(R.id.listDate)
-        var assignedTo = itemView.findViewById<TextView>(R.id.listAssignedTo)
+        var taskName = itemView.findViewById<TextView>(R.id.listTaskName) as TextView
+        var assignedBy = itemView.findViewById<TextView>(R.id.listAssignedBy) as TextView
+        var assignedDate = itemView.findViewById<TextView>(R.id.listDate) as TextView
+        var assignedTo = itemView.findViewById<TextView>(R.id.listAssignedTo)  as TextView
 
         fun bindViews(task:Task){
             taskName.text = task.taskName
             assignedBy.text = task.assignedBy
-            assignedDate.text = task.timeAssigned.toString()  // Todo: convert to human readable date
+            //assignedDate.text = task.timeAssigned.toString()  // Todo: convert to human readable date
+            assignedDate.text = "Date: 20 June 2024"
             assignedTo.text = task.assignedTo
         }
 
