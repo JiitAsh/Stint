@@ -29,7 +29,7 @@ class TaskListAdapter(private val list:ArrayList<Task>,
         return list.size
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnClickListener{
 
         var taskName = itemView.findViewById<TextView>(R.id.listTaskName) as TextView
         var assignedBy = itemView.findViewById<TextView>(R.id.listAssignedBy) as TextView
@@ -43,6 +43,10 @@ class TaskListAdapter(private val list:ArrayList<Task>,
             assignedDate.text = task.showHumanDate(System.currentTimeMillis())    // human readable date
 //            assignedDate.text = "Date: 20 June 2024"
             assignedTo.text = task.assignedTo
+        }
+
+        override fun onClick(v: View?) {
+
         }
 
     }

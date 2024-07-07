@@ -1,6 +1,8 @@
 package com.example.stint.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -59,7 +61,7 @@ class TaskListActivity : AppCompatActivity() {
 
         // load tasks
         taskList = dbHandler!!.readTasks()
-//        taskList!!.reverse()
+        taskList!!.reverse()
 
 
         for(c in taskList!!.iterator()){
@@ -120,6 +122,36 @@ class TaskListActivity : AppCompatActivity() {
         dialogBuilder = AlertDialog.Builder(this).setView(view)  // builds dialog
         dialog = dialogBuilder!!.create()  // actual dialog
         dialog!!.show()   // shows the dialog
+
+
+        saveButtton.setOnClickListener{
+            var tName = taskName.text.toString().trim()
+            var aBy = assignedBy.text.toString().trim()
+            var aTo = assignedTo.text.toString().trim()
+
+            if(!TextUtils.isEmpty(tName)
+                && !TextUtils.isEmpty(aBy)
+                && !TextUtils.isEmpty(aTo)){
+
+                var task = Task()
+                task.taskName = tName
+                task.assignedBy = aBy
+                task.assignedTo = aTo
+
+
+
+                // save task to the database
+                dbHandler!!.createTask(task)
+
+                dialog!!.dismiss()
+
+                startActivity(Intent(this,TaskListActivity::class.java))
+                finish()
+
+            }else{
+
+            }
+        }
 
     }
 
