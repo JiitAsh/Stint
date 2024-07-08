@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
                 var intent = Intent(this,TaskListActivity::class.java)
                 startActivity(intent)
-//                finish()   // closes the activity, if we press back then we will not go to the main activity
+                finish()   // closes the activity, if we press back then we will not go to the main activity
 
             }else{
                 Toast.makeText(this, "Please enter a task", Toast.LENGTH_SHORT).show()
@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity() {
     fun checkDB(){
         if(dbHandler!!.getTaskCount()>0){
             startActivity(Intent(this,TaskListActivity::class.java))
-//            finish()    // this closes the activity, if we press the back button then we will not go to the main activity
+            finish()    // this closes the activity, if we press the back button then we will not go to the main activity
         }
     }
 

@@ -74,9 +74,9 @@ class TaskListActivity : AppCompatActivity() {
 //            task.timeAssigned=234567890
 
             task.id=c.id
-            task.taskName=c.taskName
-            task.assignedBy=c.assignedBy
-            task.assignedTo=c.assignedTo
+            task.taskName="Task: ${c.taskName}"
+            task.assignedBy="Assigned By: ${c.assignedBy}"
+            task.assignedTo="Assigned To: ${c.assignedTo}"
             //task.timeAssigned=c.timeAssigned   // ToDo: convert to human readable date   // done
             task.showHumanDate(c.timeAssigned!!)  // human readable date
 

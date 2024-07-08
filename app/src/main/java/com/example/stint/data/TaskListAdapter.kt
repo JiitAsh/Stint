@@ -1,14 +1,20 @@
 package com.example.stint.data
 
 import android.content.Context
+import android.content.Intent
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stint.R
+import com.example.stint.activity.TaskListActivity
 import com.example.stint.model.Task
 
 class TaskListAdapter(private val list:ArrayList<Task>,
@@ -71,7 +77,11 @@ class TaskListAdapter(private val list:ArrayList<Task>,
                     notifyItemRemoved(adapterPosition)
 
                 }
-                editButton.id -> { Toast.makeText(mContext,"Edit Button",Toast.LENGTH_LONG).show()}
+                editButton.id -> {
+
+                    editTask(task)
+
+                }
             }
         }
 
@@ -80,6 +90,58 @@ class TaskListAdapter(private val list:ArrayList<Task>,
             var db: TasksDatabaseHandler = TasksDatabaseHandler(mContext)
 
             db.deleteTask(id)
+        }
+
+
+        fun editTask(task:Task){
+
+            var dialogBuilder:AlertDialog.Builder?
+            var dialog:AlertDialog?
+            var dbHandler:TasksDatabaseHandler = TasksDatabaseHandler(context)
+
+            var view = LayoutInflater.from(context).inflate(R.layout.popup,null)
+
+            var taskName = view.findViewById<EditText>(R.id.popupEnterTaskId)
+            var assignedBy = view.findViewById<EditText>(R.id.popupAssignedById)
+            var assignedTo = view.findViewById<EditText>(R.id.popupAssignToId)
+            var saveButtton = view.findViewById<Button>(R.id.popupSaveTaskBtn)
+
+
+            dialogBuilder = AlertDialog.Builder(context).setView(view)  // builds dialog
+            dialog = dialogBuilder!!.create()  // actual dialog
+            dialog!!.show()   // shows the dialog
+
+
+            saveButtton.setOnClickListener {
+                var tName = taskName.text.toString().trim()
+                var aBy = assignedBy.text.toString().trim()
+                var aTo = assignedTo.text.toString().trim()
+
+                if (!TextUtils.isEmpty(tName)
+                    && !TextUtils.isEmpty(aBy)
+                    && !TextUtils.isEmpty(aTo)
+                ) {
+
+//                    var task = Task()
+                    task.taskName = "Task: ${tName}"
+                    task.assignedBy = "Assigned By: ${aBy}"
+                    task.assignedTo = "Assigned To: ${aTo}"
+
+
+                    // save task to the database
+                    dbHandler!!.updateTask(task)
+                    notifyItemChanged(adapterPosition,task)
+
+                    dialog!!.dismiss()
+
+//                    startActivity(Intent(this, TaskListActivity::class.java))
+//                    finish()
+
+                } else {
+
+                }
+
+            }
         }
 
     }

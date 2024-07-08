@@ -25,6 +25,6 @@ class Task() {
         var dateFormat: java.text.DateFormat = DateFormat.getDateInstance()
         var formattedDate: String = dateFormat.format(Date(timeAssigned).time)
 
-        return formattedDate
+        return "Added On: ${formattedDate}"
     }
 }
