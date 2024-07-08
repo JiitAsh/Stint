@@ -131,10 +131,10 @@ class TasksDatabaseHandler(context: Context):
     }
 
 
-    fun deleteTask(task: Task){
+    fun deleteTask(id: Int){
         var db: SQLiteDatabase = writableDatabase
 
-        db.delete(TABLE_NAME,KEY_ID+"=?", arrayOf(task.id.toString()))
+        db.delete(TABLE_NAME,KEY_ID+"=?", arrayOf(id.toString()))
         db.close()
     }
 
